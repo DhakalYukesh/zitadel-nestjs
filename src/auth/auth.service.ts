@@ -1,13 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { ZitadelAuthAdapter } from "./zitadel-auth-adapter.js";
+import { ZitadelAdapter } from "@/lib/adapter/zitadel/zitadel.adapter.js";
+import { AuthProvider } from "./auth-provider.interface.js";
 
 @Injectable()
-export class AuthService {
-  constructor(private readonly zitadelAuthAdapter: ZitadelAuthAdapter) {}
-
-  async login(username: string, password: string, orgId: string) {
-    return this.zitadelAuthAdapter.login(username, password, orgId);
-  }
+export class AuthService implements AuthProvider {
+  constructor(private readonly zitadelAuthAdapter: ZitadelAdapter) {}
 
   async getBrandingSettings(orgId: string) {
     return this.zitadelAuthAdapter.getBrandingSettings(orgId);
